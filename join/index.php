@@ -83,13 +83,16 @@ if ($_REQUEST["action"] == "rewrite" && isset($_SESSION["join"])) {
 						<?php if ($error["password"] === "blank") : ?>
 							<P class="error">*　パスワードを入力してください。</P>
 						<?php endif; ?>
-						<?php if ($error["image"] === "type") : ?>
-							<P class="error">*　写真などは「.jpg」または「.png」「.gif」の画像を指定してください。</P>
-						<?php endif; ?>
 					</dd>
 					<dt>写真など</dt>
 					<dd>
 						<input type="file" name="image" size="35" value="test" />
+						<?php if ($error["image"] === "type") : ?>
+							<P class="error">*　写真などは「.jpg」または「.png」「.gif」の画像を指定してください。</P>
+						<?php endif; ?>
+						<?php if (!empty($error)): ?>
+							<P class="error">*　恐れ入りますが、画像を改めて指定してください。</P>
+						<?php endif; ?>
 					</dd>
 				</dl>
 				<div><input type="submit" value="入力内容を確認する" /></div>
