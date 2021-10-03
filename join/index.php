@@ -15,8 +15,19 @@ if (!empty($_POST)) {
 		$error["password"] = "blank";
 	}
 
+	$fileName = $_FILES["image"]["name"];
+	if (!empty($fileName)) {
+		$ext = substr($fileName, -3);
+		if ($ext != "jpg" && $ext != "png" && $ext != "gif") {
+			$error["image"] = "type";
+		}
+	}
+
 	if (empty($error)) {
+		$image = date("YmdHis") . $_FILES["image"]["name"];
+		move_uploaded_file($_FILES["image"]["tmp_name"], "../member_picture/" . $image);
 		$_SESSION["join"] = $_POST;
+		$_SESSION["join"]["image"] = $image;
 		header("Location: check.php");
 		exit();
 	}
@@ -71,6 +82,9 @@ if ($_REQUEST["action"] == "rewrite" && isset($_SESSION["join"])) {
 						<?php endif; ?>
 						<?php if ($error["password"] === "blank") : ?>
 							<P class="error">*　パスワードを入力してください。</P>
+						<?php endif; ?>
+						<?php if ($error["image"] === "type") : ?>
+							<P class="error">*　写真などは「.jpg」または「.png」「.gif」の画像を指定してください。</P>
 						<?php endif; ?>
 					</dd>
 					<dt>写真など</dt>
