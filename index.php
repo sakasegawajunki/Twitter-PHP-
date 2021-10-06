@@ -19,7 +19,7 @@ if (!empty($_POST)) {
     $message->execute(array(
       $member["id"],
       $_POST["message"],
-      $_POST["reply_message_id"]
+      $_POST["reply_post_id"]
     ));
 
     header("Location: index.php");
